@@ -4,8 +4,8 @@
 
 ## Note
 
-For docs go to fork.  
-Forked from [adascal/grunt-terser](https://github.com/adascal/grunt-terser)
+Forked from [adascal/grunt-terser](https://github.com/adascal/grunt-terser)  
+For docs go to fork.
 
 ## Changes
 
