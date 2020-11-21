@@ -24,6 +24,7 @@
     "test": "grunt test"
   },
   "dependencies": {
+    "maxmin": "^3.0.0",
     "terser": "^5.5.0"
   },
   "devDependencies": {

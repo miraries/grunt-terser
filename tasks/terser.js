@@ -8,6 +8,7 @@
  */
 
 const Terser = require('terser');
+const maxmin = require('maxmin');
 
 module.exports = function(grunt) {
   // Please see the Grunt documentation for more information regarding task
@@ -25,17 +26,14 @@ module.exports = function(grunt) {
 
       // Iterate over all specified file groups.
       for (const f of this.files) {
+
+        if (!f.src.length) {
+          grunt.log.warn('Source files not found for \x1b[31m%s\x1b[0m ', f.dest);
+          continue;
+        }
+
         // Concat specified files.
         const src = f.src
-          .filter(function(filepath) {
-            // Warn on and remove invalid source files (if nonull was set).
-            if (!grunt.file.exists(filepath)) {
-              grunt.log.warn('Source file "' + filepath + '" not found.');
-              return false;
-            } else {
-              return true;
-            }
-          })
           .reduce(function(sources, filepath) {
             sources[filepath] = grunt.file.read(filepath);
 
@@ -43,7 +41,15 @@ module.exports = function(grunt) {
           }, {});
 
         // Minify file code.
-        const result = await Terser.minify(src, options);
+        let result;
+        try {
+          result = await Terser.minify(src, options);
+        } catch (err) {
+          grunt.log.error('Terser failed minifying \x1b[36m%s\x1b[0m:', f.dest);
+          grunt.log.error(err);
+          grunt.verbose.error(err.stack);
+          return false;
+        }
 
         if (result.error) {
           grunt.log.error(result.error);
@@ -65,20 +71,19 @@ module.exports = function(grunt) {
           grunt.file.write(mapFileName, result.map);
         }
 
-        // Print a success message for individual files only if grunt is run with --verbose flag
-        grunt.verbose.writeln('File "' + f.dest + '" created.');
+        // Print a success message
+        const diff = maxmin(Object.values(src).map(s => s.length).reduce((a, b) => a + b), result.code.length);
+        grunt.log.writeln(`>> File \x1b[36m%s\x1b[0m created. `, f.dest, diff);
 
         // Increment created files counter
         createdFiles++;
       }
 
       if (createdFiles > 0) {
-        grunt.log.ok(
-          `${createdFiles} ${grunt.util.pluralize(createdFiles, 'file/files')} created.`
-        );
+        grunt.log.ok(`${createdFiles} ${grunt.util.pluralize(createdFiles, 'file/files')} created.`);
       }
 
       done();
-    }
+    },
   );
 };
