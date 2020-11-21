@@ -6,7 +6,7 @@
  * Licensed under the MIT license.
  */
 
-'use strict';
+const banner = 'testbanner';
 
 module.exports = function(grunt) {
 
@@ -31,28 +31,29 @@ module.exports = function(grunt) {
     // Configuration to be run (and then tested).
     terser: {
       default_options: {
-        options: {
-        },
         files: {
-          'tmp/default_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/default_options': ['test/fixtures/code.js', 'test/fixtures/code2.js']
         }
       },
       custom_options: {
         options: {
-          separator: ': ',
-          punctuation: ' !!!'
+          output: {
+            preamble: banner,
+            comments: true
+          },
+          compress: true,
+          mangle: true
         },
         files: {
-          'tmp/custom_options': ['test/fixtures/testing', 'test/fixtures/123']
+          'tmp/custom_options': ['test/fixtures/code.js', 'test/fixtures/code2.js']
         }
-      }
+      },
     },
 
     // Unit tests.
     nodeunit: {
       tests: ['test/*_test.js']
     }
-
   });
 
   // Actually load this plugin's task(s).
