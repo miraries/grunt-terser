@@ -1,30 +1,30 @@
 {
-  "name": "grunt-terser",
+  "name": "@miraries/grunt-terser",
   "description": "Grunt plugin for A JavaScript parser, mangler/compressor and beautifier toolkit for ES6+.",
   "version": "1.0.0",
-  "homepage": "https://github.com/adascal/grunt-terser",
+  "homepage": "https://github.com/miraries/grunt-terser",
   "author": {
-    "name": "Alexandr Dascal",
-    "email": "Alexandr.Dascal@gmail.com"
+    "name": "Ivan Kotlaja",
+    "email": "me@ivnk.dev"
   },
   "repository": {
     "type": "git",
-    "url": "git://github.com/adascal/grunt-terser.git"
+    "url": "git://github.com/miraries/grunt-terser.git"
   },
   "bugs": {
-    "url": "https://github.com/adascal/grunt-terser/issues"
+    "url": "https://github.com/miraries/grunt-terser/issues"
   },
   "licenses": [
     {
       "type": "MIT",
-      "url": "https://github.com/adascal/grunt-terser/blob/master/LICENSE-MIT"
+      "url": "https://github.com/miraries/grunt-terser/blob/master/LICENSE-MIT"
     }
   ],
-  "engines": {
-    "node": ">=6.0.0"
-  },
   "scripts": {
     "test": "grunt test"
+  },
+  "dependencies": {
+    "maxmin": "^3.0.0"
   },
   "peerDependencies": {
     "terser": "5.x"
@@ -32,7 +32,7 @@
   "devDependencies": {
     "grunt": "^1.0.4",
     "grunt-contrib-clean": "^2.0.0",
-    "grunt-contrib-jshint": "^2.1.0",
+    "grunt-contrib-jshint": "^3.0.0",
     "grunt-contrib-nodeunit": "^2.0.0"
   },
   "keywords": [
